@@ -27,7 +27,19 @@ const NotificationsScreen = (props: Props) => {
   const headerHeight = useHeaderHeight();
   return (
     <>
-      <Stack.Screen options={{ headerShown: true, headerTransparent: true }} />
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          headerTransparent: true,
+          headerTitle: "Notifications",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontSize: 18,
+            fontWeight: "600",
+            color: Colors.black,
+          },
+        }}
+      />
       <View style={[styles.container, { marginTop: headerHeight }]}>
         <FlatList
           data={notifications}

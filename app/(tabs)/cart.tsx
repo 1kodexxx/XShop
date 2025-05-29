@@ -33,7 +33,19 @@ const CartScreen = (props: Props) => {
   };
   return (
     <>
-      <Stack.Screen options={{ headerShown: true, headerTransparent: true }} />
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          headerTransparent: true,
+          headerTitle: "Cart",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontSize: 18,
+            fontWeight: "600",
+            color: Colors.black,
+          },
+        }}
+      />
       <View style={[styles.container, { marginTop: headerHeight }]}>
         <FlatList
           data={cartItems}
