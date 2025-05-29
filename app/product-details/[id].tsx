@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
@@ -20,21 +21,7 @@ const ProductDetails = () => {
   const { id, productType } = useLocalSearchParams();
   const [product, setProduct] = useState<ProductType>();
   const [selectedColor, setSelectedColor] = useState("#D4AF37");
-
-  useEffect(() => {
-    getProductDetails();
-  }, []);
-
-  const getProductDetails = async () => {
-    const URL =
-      productType === "sale"
-        ? `http://10.0.2.2:8000/saleProducts/${id}`
-        : `http://10.0.2.2:8000/products/${id}`;
-    const response = await axios.get(URL);
-
-    setProduct(response.data);
-  };
-
+  const [selectedSize, setSelectedSize] = useState("M");
   const headerHeight = useHeaderHeight();
 
   const availableColors = [
@@ -47,14 +34,34 @@ const ProductDetails = () => {
   ];
 
   const sizes = ["S", "M", "L", "XL"];
-  const [selectedSize, setSelectedSize] = useState("M");
+
+  useEffect(() => {
+    getProductDetails();
+  }, []);
+
+  const getProductDetails = async () => {
+    const URL =
+      productType === "sale"
+        ? `http://10.0.2.2:8000/saleProducts/${id}`
+        : `http://10.0.2.2:8000/products/${id}`;
+    const response = await axios.get(URL);
+    setProduct(response.data);
+  };
+
+  if (!product) {
+    return (
+      <View style={[styles.loaderWrapper, { marginTop: headerHeight }]}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
 
   return (
     <>
       <Stack.Screen
         options={{
           title: "Product Details",
-          headerTitleAlign: "center", // <-- центрирует заголовок
+          headerTitleAlign: "center",
           headerTransparent: true,
           headerLeft: () => (
             <TouchableOpacity
@@ -77,103 +84,100 @@ const ProductDetails = () => {
       />
 
       <ScrollView style={{ marginTop: headerHeight, marginBottom: 90 }}>
-        {product && (
-          <Animated.View entering={FadeInDown.delay(300).duration(500)}>
-            <ImageSlider imageList={product.images} />
+        <Animated.View entering={FadeInDown.delay(300).duration(500)}>
+          <ImageSlider imageList={product.images} />
+        </Animated.View>
+
+        <View style={styles.container}>
+          {/* Rating */}
+          <Animated.View
+            style={styles.ratingWrapper}
+            entering={FadeInDown.delay(500).duration(500)}>
+            <View style={styles.ratingInner}>
+              <Ionicons name="star" size={20} color={"#D4AF37"} />
+              <Text style={styles.rating}>
+                4.7 <Text>(136)</Text>
+              </Text>
+            </View>
+            <TouchableOpacity>
+              <Ionicons name="heart-outline" size={22} color={Colors.black} />
+            </TouchableOpacity>
           </Animated.View>
-        )}
-        {product && (
-          <View style={styles.container}>
-            {/* Рейтинг и иконка */}
-            <Animated.View
-              style={styles.ratingWrapper}
-              entering={FadeInDown.delay(500).duration(500)}>
-              <View style={styles.ratingInner}>
-                <Ionicons name="star" size={20} color={"#D4AF37"} />
-                <Text style={styles.rating}>
-                  4.7 <Text>(136)</Text>
-                </Text>
-              </View>
-              <TouchableOpacity>
-                <Ionicons name="heart-outline" size={22} color={Colors.black} />
-              </TouchableOpacity>
-            </Animated.View>
 
-            {/* Название и цена */}
-            <Animated.Text
-              entering={FadeInDown.delay(700).duration(500)}
-              style={styles.title}>
-              {product.title}
-            </Animated.Text>
+          {/* Title */}
+          <Animated.Text
+            entering={FadeInDown.delay(700).duration(500)}
+            style={styles.title}>
+            {product.title}
+          </Animated.Text>
 
-            <Animated.View
-              style={styles.priceWrapper}
-              entering={FadeInDown.delay(500).duration(500)}>
-              <Text style={styles.price}>${product.price}</Text>
-              <View style={styles.priceDiscount}>
-                <Text style={styles.priceDiscountText}>6% Off</Text>
-              </View>
-              <Text style={styles.oldPrice}>${product.price + 2}</Text>
-            </Animated.View>
+          {/* Price */}
+          <Animated.View
+            style={styles.priceWrapper}
+            entering={FadeInDown.delay(800).duration(500)}>
+            <Text style={styles.price}>${product.price}</Text>
+            <View style={styles.priceDiscount}>
+              <Text style={styles.priceDiscountText}>6% Off</Text>
+            </View>
+            <Text style={styles.oldPrice}>${product.price + 2}</Text>
+          </Animated.View>
 
-            {/* Описание */}
-            <Animated.Text
-              style={styles.description}
-              entering={FadeInDown.delay(1100).duration(500)}>
-              {product.description}
-            </Animated.Text>
+          {/* Description */}
+          <Animated.Text
+            style={styles.description}
+            entering={FadeInDown.delay(1000).duration(500)}>
+            {product.description}
+          </Animated.Text>
 
-            {/* Варианты цвета и размера */}
-            <Animated.View
-              style={styles.productVariationWrapper}
-              entering={FadeInDown.delay(1300).duration(500)}>
-              {/* Цвет */}
-              <View style={styles.productVariationType}>
-                <Text style={styles.productVariationTitle}>Color</Text>
-                <View style={styles.colorGrid}>
-                  {availableColors.map((color) => (
-                    <TouchableOpacity
-                      key={color}
+          {/* Variants */}
+          <Animated.View
+            style={styles.productVariationWrapper}
+            entering={FadeInDown.delay(1200).duration(500)}>
+            <View style={styles.productVariationType}>
+              <Text style={styles.productVariationTitle}>Color</Text>
+              <View style={styles.colorGrid}>
+                {availableColors.map((color) => (
+                  <TouchableOpacity
+                    key={color}
+                    style={[
+                      styles.colorCircleWrapper,
+                      selectedColor === color && styles.colorCircleSelected,
+                    ]}
+                    onPress={() => setSelectedColor(color)}>
+                    <View
                       style={[
-                        styles.colorCircleWrapper,
-                        selectedColor === color && styles.colorCircleSelected,
+                        styles.productVariationColorValue,
+                        { backgroundColor: color },
                       ]}
-                      onPress={() => setSelectedColor(color)}>
-                      <View
-                        style={[
-                          styles.productVariationColorValue,
-                          { backgroundColor: color },
-                        ]}
-                      />
-                    </TouchableOpacity>
-                  ))}
-                </View>
+                    />
+                  </TouchableOpacity>
+                ))}
               </View>
+            </View>
 
-              {/* Размер */}
-              <View style={styles.productVariationType}>
-                <Text style={styles.productVariationTitle}>Size</Text>
-                <View style={styles.sizeGrid}>
-                  {sizes.map((size) => (
-                    <TouchableOpacity
-                      key={size}
-                      style={[
-                        styles.productVariationSizeValue,
-                        selectedSize === size &&
-                          styles.productVariationSizeValueActive,
-                      ]}
-                      onPress={() => setSelectedSize(size)}>
-                      <Text style={styles.productVariationSizeValueText}>
-                        {size}
-                      </Text>
-                    </TouchableOpacity>
-                  ))}
-                </View>
+            <View style={styles.productVariationType}>
+              <Text style={styles.productVariationTitle}>Size</Text>
+              <View style={styles.sizeGrid}>
+                {sizes.map((size) => (
+                  <TouchableOpacity
+                    key={size}
+                    style={[
+                      styles.productVariationSizeValue,
+                      selectedSize === size &&
+                        styles.productVariationSizeValueActive,
+                    ]}
+                    onPress={() => setSelectedSize(size)}>
+                    <Text style={styles.productVariationSizeValueText}>
+                      {size}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
               </View>
-            </Animated.View>
-          </View>
-        )}
+            </View>
+          </Animated.View>
+        </View>
       </ScrollView>
+
       <Animated.View
         style={styles.buttonWrapper}
         entering={SlideInDown.delay(500).duration(500)}>
@@ -355,5 +359,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: Colors.white,
+  },
+  loaderWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.white,
   },
 });
