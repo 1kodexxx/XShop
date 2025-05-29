@@ -20,9 +20,8 @@ type Props = {
 
 const FlashSale = ({ products }: Props) => {
   const saleEndDate = new Date();
-  saleEndDate.setFullYear(2025, 9, 2);
-  saleEndDate.setDate(saleEndDate.getDate() + 2);
-  saleEndDate.setHours(23, 59, 59);
+  saleEndDate.setDate(saleEndDate.getDate() + 2); // +2 дня от текущей
+  saleEndDate.setHours(23, 59, 59, 999); // Конец дня
 
   const [timeUnits, setTimeUnits] = useState({
     days: 0,
@@ -72,13 +71,13 @@ const FlashSale = ({ products }: Props) => {
         </View>
         <View style={styles.timer}>
           <Ionicons name="time-outline" size={16} color={Colors.black} />
-          <Text style={styles.timerTxt}>{`${formatTime(
-            timeUnits.days
-          )}:${formatTime(timeUnits.hours)}:${formatTime(
-            timeUnits.minutes
-          )}:${formatTime(timeUnits.hours)}:${formatTime(
-            timeUnits.seconds
-          )}`}</Text>
+          <Text style={styles.timerTxt}>
+            {`${formatTime(timeUnits.days)}:${formatTime(
+              timeUnits.hours
+            )}:${formatTime(timeUnits.minutes)}:${formatTime(
+              timeUnits.seconds
+            )}`}
+          </Text>
         </View>
 
         <TouchableOpacity>
