@@ -26,16 +26,24 @@ const TabBarButton = (props: Props) => {
       onPress={onPress}
       onLongPress={onLongPress}
       style={styles.tabbarBtn}>
-      {routeName == "cart" && (
-        <View>
-          <Text>3</Text>
-        </View>
-      )}
+      <View style={styles.iconWrapper}>
+        {icon[routeName]({
+          color: isFocused ? Colors.primary : Colors.black,
+        })}
 
-      {icon[routeName]({
-        color: isFocused ? Colors.primary : Colors.black,
-      })}
-      <Text style={{ color: isFocused ? "#673ab7" : "#222" }}>{label}</Text>
+        {routeName === "cart" && (
+          <View style={styles.badgeWrapper}>
+            <Text style={styles.badgeText}>3</Text>
+          </View>
+        )}
+      </View>
+      <Text
+        style={[
+          styles.label,
+          { color: isFocused ? Colors.primary : Colors.black },
+        ]}>
+        {label}
+      </Text>
     </Pressable>
   );
 };
@@ -49,18 +57,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 5,
   },
+  iconWrapper: {
+    position: "relative",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   badgeWrapper: {
     position: "absolute",
-    backgroundColor: Colors.highlight,
-    top: -5,
-    right: 20,
-    paddingVertical: 2,
+    top: -6,
+    right: -10,
+    backgroundColor: Colors.primary,
     paddingHorizontal: 6,
+    paddingVertical: 2,
     borderRadius: 10,
     zIndex: 10,
   },
   badgeText: {
-    color: Colors.black,
+    color: "#fff",
+    fontSize: 10,
+    fontWeight: "bold",
+  },
+  label: {
     fontSize: 12,
   },
 });

@@ -11,7 +11,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { useEffect, useState } from "react";
 
-// Получаем допустимые ключи из icon
 type RouteName = keyof typeof icon;
 
 function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
@@ -47,9 +46,9 @@ function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             position: "absolute",
             backgroundColor: Colors.primary,
             top: 0,
-            left: 20,
+            left: 0,
             height: 2,
-            width: buttonWidth / 2,
+            width: buttonWidth,
           },
           animatedStyle,
         ]}
@@ -84,7 +83,6 @@ function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
           });
         };
 
-        // Проверка, что route.name — это ключ из icon
         if (!(route.name in icon)) return null;
 
         return (
