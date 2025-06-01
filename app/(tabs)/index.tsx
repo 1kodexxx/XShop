@@ -82,7 +82,7 @@ const HomeScreen = () => {
         }
         renderItem={({ item, index }) => (
           <View style={styles.gridItem}>
-            <ProductItem item={item} index={index} />
+            <ProductItem item={item} index={index} productType="regular" />
           </View>
         )}
         contentContainerStyle={styles.contentContainer}
