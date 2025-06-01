@@ -52,8 +52,8 @@
   <img src="./screenshots/qr.png" alt="QR-код XShop" width="300" />
 </p>
 
-▶️ Или открой по ссылке в браузере:  
-[https://expo.dev/preview/update?message=XShop](https://expo.dev/preview/update?message=XShop)
+[▶️ Или открой по ссылке в браузере:  
+[https://expo.dev/accounts/pvntheraxxx/projects/xshop/updates/c4cd6168-ec4d-45ab-86f9-cfe301741f4e]
 
 ---
 
