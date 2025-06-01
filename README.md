@@ -17,11 +17,11 @@
 Ниже — три ключевых сценария использования.
 
 <p align="center">
-  <img src="./assets/gifs/signup-signin.gif" alt="Экран входа и регистрации" width="30%" />
+  <img src="./assets/screenshots/signup-signin.gif" alt="Экран входа и регистрации" width="30%" />
   &nbsp;
-  <img src="./assets/gifs/home.gif" alt="Главная страница" width="30%" />
+  <img src="./assets/screenshots/home.gif" alt="Главная страница" width="30%" />
   &nbsp;
-  <img src="./assets/gifs/tabs.gif" alt="Остальные страницы" width="30%" />
+  <img src="./assets/screenshots/tabs.gif" alt="Остальные страницы" width="30%" />
 </p>
 
 <p align="center">
