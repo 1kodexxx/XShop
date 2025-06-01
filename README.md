@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./screenshots/logo.png" alt="MovieFlix logo" width="120" />
+  <img src="./assets/favicon.png" alt="XShop Logo" width="120" />
 </p>
 
 <h1 align="center">🎬 MovieFlix</h1>
