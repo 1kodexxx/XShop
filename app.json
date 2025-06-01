@@ -3,6 +3,7 @@
     "name": "XShop",
     "scheme": "xshop",
     "slug": "xshop",
+    "owner": "pvntheraxxx",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/favicon.png",
@@ -25,6 +26,17 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3f662e17-104b-42ce-a969-f3a457668b5e"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/3f662e17-104b-42ce-a969-f3a457668b5e"
     }
   }
 }
