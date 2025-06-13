@@ -57,7 +57,7 @@
 ### 1. 📥 Склонируй репозиторий
 
 ```bash
-git clone https://github.com/pvntheraxxx/XShop.git
+git clone https://github.com/1kodexxx/XShop.git
 cd XShop
 ```
 
